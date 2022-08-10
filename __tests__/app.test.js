@@ -61,6 +61,16 @@ describe('backend top secrets routes', () => {
 
   });
 
+  it('protected/secrets should return list of secrets for an auth user', async () => {
+    const [agent] = await registerAndLogin();
+    const res = await agent.get('/api/v1/secrets');
+    expect(res.status).toBe(200);
+    expect(res.body[0]).toEqual({
+      title: 'Luke Skywalker secret',
+      description: 'he likes cookies',
+      created_at: expect.any(String)
+    });
+  });
   //NEW TEST HERE
 
   afterAll(() => {
