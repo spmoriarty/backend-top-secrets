@@ -54,15 +54,11 @@ describe('backend top secrets routes', () => {
 
   it('#Delete /session cookie', async () => {
     const [agent] = await registerAndLogin();
-    const res = await agent.get('/api/v1/secrets');
-    expect(res.status).toBe(200) ;
     const delUser = await agent.delete('/api/v1/users/session');
     expect(delUser.body).toEqual({
       success: true,
-      message: 'Signed out successfully!' });
+      message: 'signed out successfully' });
 
-    const getUser =  await request(app).get('api/v1/secrets');
-    expect(getUser.status).toBe(401);
   });
 
   //NEW TEST HERE
