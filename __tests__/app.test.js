@@ -2,7 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const { post } = require('../lib/app');
+
 // const UserService = require('../lib/services/UserService');
 const newUser = {
   firstName: 'Testing',
@@ -31,15 +31,16 @@ describe('backend top secrets routes', () => {
 
 
   it('#Post Sign in exisiting user', async () => {
-    await request(app).post('/api/v1/users/').send(newUser);
-    const res = await request(app)
-      .post('/api/v1/users/sessions')
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users').send(newUser);
+    const res = await agent
+      .post('/api/v1/users/session')
       .send({ email: 'lamp@shade.com', password: '12345' });
 
     expect(res.status).toBe(200);
   });
 
-  
+
   //NEW TEST HERE
 
   afterAll(() => {
